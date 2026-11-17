@@ -73,7 +73,7 @@ export function useRoutesGrouping({
         objectByName("minClusterSize",1,100),
         objectByName("maxRadiusKm",1,benchmark? 10000 : 500 ),
         objectByName("noiseClusterMaxDistanceKm",1, benchmark? 10000 : 500),
-        objectByName("noiseMaxDistanceKm",1, benchmark? 10000 : 500)  
+        objectByName("noiseMaxDistanceKm",1, benchmark? 10000 : 500),
     ] 
     })
 

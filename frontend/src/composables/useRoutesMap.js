@@ -31,13 +31,19 @@ export function useRoutesMap() {
     const colorBySolver = {
         "GREEDY":"#283593",
         "GENETIC":"#026901",
-        "ANNEALING":"#460202"
+        "ANNEALING":"#460202",
+        "QISKIT":"#6a1b9a",
+        "DWAVE":"#00838f",
+        "HGS":"#d841db"
     }
 
     const dashedColorBySolver = {
         "GREEDY":"#283593",
         "GENETIC":"#026901",
-        "ANNEALING": "#460202"
+        "ANNEALING": "#460202",
+        "QISKIT": "#6a1b9a",
+        "DWAVE": "#00838f",
+        "HGS":"#d841db"
     }
 
 

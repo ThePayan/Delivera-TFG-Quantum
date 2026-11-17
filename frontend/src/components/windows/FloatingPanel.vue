@@ -12,9 +12,6 @@ const getNextZIndex = inject('getNextZIndex')
 
 const panels = inject('panels')
 
-const minimized = ref(false)
-
-const maximized = ref(false)
 
 let currentZIndex = 10
 
@@ -28,6 +25,11 @@ const dragOffsetX = ref(0)
 const dragOffsetY = ref(0)
 
 const props = defineProps({
+
+    startMinimized: {
+        type: Boolean,
+        default: true    
+    },
 
     onDockbar: {
         type: Boolean,
@@ -96,6 +98,11 @@ const props = defineProps({
     }
 
 })
+
+
+const minimized = ref(props.startMinimized)
+
+const maximized = ref(false)
 
 const posX = ref(props.initialX)
 const posY = ref(props.initialY)
@@ -190,7 +197,9 @@ onMounted(() => {
 
         displayName: props.displayName,
 
-        icon: props.icon
+        icon: props.icon,
+
+        startMinimized: props.startMinimized
 
     })
 
@@ -249,6 +258,8 @@ watch(
         :style="{
             left: `${dockCoordinates.x}px`,
             top: `${dockCoordinates.y}px`,
+            width: maximized ? undefined : `${width}px`,
+            height: maximized ? undefined : `${height}px`,
             zIndex
         }"
     >

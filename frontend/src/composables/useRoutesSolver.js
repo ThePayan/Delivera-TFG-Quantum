@@ -57,35 +57,51 @@ export function useRoutesSolver(
         })
 
     })
+
+    const allSolvers = ref([
+        {
+            id:1,
+            name: t("routes.solvers.GREEDY.name"),
+            description: t("routes.solvers.GREEDY.description"),
+            icon: "pi pi-bolt",
+            type: "GREEDY"
+        },{
+            id:2,
+            name: t("routes.solvers.GENETIC.name"),
+            description: t("routes.solvers.GENETIC.description"),
+            icon: "pi pi-share-alt",
+            type: "GENETIC"
+        }, {
+            id:3,
+            name: t("routes.solvers.ANNEALING.name"),
+            description: t("routes.solvers.ANNEALING.description"),
+            icon: "pi pi-sparkles",
+            type: "ANNEALING"
+        }, {
+            id:4,
+            name: t("routes.solvers.QISKIT.name"),
+            description: t("routes.solvers.QISKIT.description"),
+            icon: "pi pi-microchip",
+            type: "QISKIT"
+        }, {
+            id:5,
+            name: t("routes.solvers.DWAVE.name"),
+            description: t("routes.solvers.DWAVE.description"),
+            icon: "pi pi-cloud",
+            type: "DWAVE"
+        }
+    ])
     
     const solvers = computed(() => {  
-        return [
-            {
-                id:1,
-                name: t("routes.solvers.GREEDY.name"),
-                description: t("routes.solvers.GREEDY.description"),
-                icon: "pi pi-bolt",
-                type: "GREEDY"
-            },{
-                id:2,
-                name: t("routes.solvers.GENETIC.name"),
-                description: t("routes.solvers.GENETIC.description"),
-                icon: "pi pi-share-alt",
-                type: "GENETIC"
-            }, {
-                id:3,
-                name: t("routes.solvers.ANNEALING.name"),
-                description: t("routes.solvers.ANNEALING.description"),
-                icon: "pi pi-sparkles",
-                type: "ANNEALING"
-            } 
-        ].filter(solver => userSolvers.value?.has?.(solver.type.toLowerCase()) )
+        return allSolvers.value.filter(solver => userSolvers.value?.has?.(solver.type.toLowerCase()) )
     })
 
     const translateSolver = {
         "GREEDY":"GREEDY",
         "GENETIC":"GENETIC",
         "ANNEALING": "ANNEALING",
+        "QISKIT": "QISKIT",
+        "DWAVE": "DWAVE"
     }
     
     function getSolverNames() {
@@ -324,6 +340,7 @@ export function useRoutesSolver(
     return {
         selectedSolversId: selections,
         solvers,
+        allSolvers,
         showCatalog,
         routesBySolver,
         routesErrorBySolver,

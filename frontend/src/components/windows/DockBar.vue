@@ -19,7 +19,7 @@ function registerPanel(panel) {
 
         ...panel,
         
-        minimized: false
+        minimized: panel?.startMinimized ?? false
 
     })
 }
@@ -123,16 +123,17 @@ provide('panels', panels)
                     {{panel.displayName}}
                 </h4>
                 
-                <button
+                <Button
                     v-if="panel.minimized"
                     class="dock-item"
+                    :title="panel.displayName"
                     
                     @click="restore(panel.id)"
                 >
 
                     <i :class="panel.icon" />
 
-                </button>
+                </Button>
 
             </div>
 

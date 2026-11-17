@@ -55,6 +55,16 @@ export  function useSmartTranslation(): SmartTranslationUtils {
             }))
     
     }
+
+    function canTranslateAllTokens(
+        tokens: SemanticToken[]
+    ): boolean {
+    
+        return tokens.every(
+            token => token.role !== SemanticRole.UNKNOWN
+        )
+    
+    }
     
     function splitCamelCase(
         text: string
@@ -622,6 +632,17 @@ export  function useSmartTranslation(): SmartTranslationUtils {
     
     }
 
+    function buildWithoutTranslation(
+        tokens: SemanticToken[]
+    ): string {
+
+        return prettifyName(
+            tokens.map(token => token.word)
+            .join(' ')
+        )
+    }
+ 
+
     function buildResourceParameter(
         tokens: SemanticToken[]
     ): string | null {
@@ -718,10 +739,12 @@ export  function useSmartTranslation(): SmartTranslationUtils {
         tokens: SemanticToken[]
     ): string | null {
     
-        if (
-            locale.value !== 'es'
-        ) {
+        if (locale.value !== 'es') {
             return buildDefaultName(tokens)
+        }
+
+        if (!canTranslateAllTokens(tokens)) {
+            return buildWithoutTranslation(tokens)
         }
     
         return buildSpanishSemanticName(

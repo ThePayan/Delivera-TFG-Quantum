@@ -25,6 +25,24 @@
 
 }
 
+.floating-panel {
+    position: absolute;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.floating-panel-resize {
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    width: 16px;
+    height: 16px;
+
+    cursor: nwse-resize;
+}
+
 .floating-panel.maximized {
 
     top: 1rem;

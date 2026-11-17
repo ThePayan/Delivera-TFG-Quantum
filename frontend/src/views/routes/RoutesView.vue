@@ -2,7 +2,7 @@
 import { useRoutes } from '@/composables/useRoutes';
 import { Checkbox, Column, DataTable, DatePicker, Select, Step, StepList, Stepper } from 'primevue';
 import { useI18n } from 'vue-i18n';
-import OptionsGrid from './OptionsGrid.vue';
+import OptionsGrid from '../../components/optionsGrid/OptionsGrid.vue';
 import { getLocaleFormat } from '@/composables/useDateRange.js';
 import QuotaUsage from '@/components/quotaUsage/QuotaUsage.vue';
 
