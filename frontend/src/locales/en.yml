@@ -446,6 +446,13 @@ common:
   delete: Delete
   close: Close
   filters: "Filters:"
+  active: "Active"
+  deactive: "Deactive"
+  defaultValue: "Default value"
+  valueType: "Value type"
+  integerType: "Integer"
+  numberType: "Number"
+  state: "State"
 
 validation:
   required: "{field} is required"

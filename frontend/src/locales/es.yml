@@ -446,6 +446,13 @@ common:
   delete: Eliminar
   close: Cerrar
   filters: "Filtros:"
+  active: "Activo"
+  deactive: "Desactivado"
+  defaultValue: "Valor por defecto"
+  valueType: "Tipo de valor"
+  integerType: "Entero"
+  numberType: "Real"
+  state: "Estado"
 
 validation:
   required: "El campo {field} es obligatorio"

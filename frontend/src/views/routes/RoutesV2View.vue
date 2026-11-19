@@ -91,14 +91,28 @@ const {
     }
 
     const {params, errors} = build( [ {
-                        name: "solverConfig",
+                        name: "mutationRate",
                         type: "NUMBER",
-                        default: 100,
-                        minimum:  0,
+                        default: 0.8,
+                        minimum:  0.2,
+                        maximum: 1,
+                        enabled: true
+                    },
+                    {
+                        name: "mutationProbability",
+                        type: "NUMBER",
+                        default: 15,
+                        minimum:  1,
                         maximum: 300,
-                        enabled: true,
-                        step: 1
-
+                        enabled: true
+                    },
+                    {
+                        name: "mutationProbability",
+                        type: "INTEGER",
+                        default: 30000000,
+                        minimum:  1,
+                        maximum: 30000000,
+                        enabled: true
                     },
                     {
                         name: "solverOptions",
@@ -122,6 +136,15 @@ const {
                         //default: 'depot-x',
                         enabled: true,
                         type: null
+                    },
+                    {
+                        name: "solverConfig2",
+                        type: "NUMBER",
+                        default: 100,
+                        minimum:  0,
+                        enabled: true,
+                        step: 1
+
                     },
                     {
                         name: "solverConfig1",
@@ -186,9 +209,9 @@ const {
 
         <DockBar>
             <FloatingPanel
-                :title="getDisplayName('solversConfig')"
-                :panel-id="'solversConfig'"
-                :display-name="getDisplayName('solversConfig')"
+                :title="getDisplayName('Config')"
+                :panel-id="'Config'"
+                :display-name="getDisplayName('Config')"
                 :icon="'pi pi-cog'"
                 :initial-x="300"
                 :initial-y="80"
