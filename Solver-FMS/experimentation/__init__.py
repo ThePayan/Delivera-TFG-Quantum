@@ -5,6 +5,8 @@ Lo que sostiene los dos scripts de experimentation, separado por para que sirve.
                 por escrito. Es lo que usa compare_solvers.py.
   tree/        Analizar: aprender de esas mediciones que solver conviene segun la
                 instancia. Es lo que usa decision_tree.py.
+  annealing/   Probar annealers (Amplify AE, SQBM+) con una QUBO del CVRP, como API
+                HTTP aparte. Tiene sus propias dependencias en annealing/requirements.txt.
 
 La division no es cosmetica. `comparison` habla con la pasarela por HTTP y funciona
 solo con la libreria estandar; `tree` no habla con nadie -parte de los CSV ya escritos-

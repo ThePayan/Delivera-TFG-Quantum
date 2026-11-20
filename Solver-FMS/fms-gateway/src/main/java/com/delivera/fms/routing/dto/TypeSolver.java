@@ -16,5 +16,7 @@ public enum TypeSolver {
     GENETIC,
     ANNEALING,
     QISKIT,
-    DWAVE
+    DWAVE,
+    AMPLIFY,
+    SQBM
 }

@@ -1,0 +1,87 @@
+{
+  "info": {
+    "name": "Annealer CVRP (Amplify AE / SQBM+)",
+    "description": "Prueba de annealers sobre las instancias Cordeau. Arranca antes la API (ver docs/annealer-experiment.md) con AMPLIFY_TOKEN en el entorno.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8096" },
+    { "key": "instance", "value": "p01" }
+  ],
+  "item": [
+    {
+      "name": "Pasarela: resolver con AMPLIFY (como los demas motores)",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:8090/api/v1/fms/instances/send?fileName={{instance}}&solverType=AMPLIFY",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"timeLimitMs\": 3000,\n  \"maxCustomersPerSubproblem\": 20\n}" }
+      }
+    },
+    {
+      "name": "Pasarela: resolver con SQBM (Toshiba SQBM+)",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:8090/api/v1/fms/instances/send?fileName={{instance}}&solverType=SQBM",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"timeLimitMs\": 2000,\n  \"maxCustomersPerSubproblem\": 8\n}" }
+      }
+    },
+    {
+      "name": "Health",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" }
+    },
+    {
+      "name": "Instancias Cordeau",
+      "request": { "method": "GET", "url": "{{baseUrl}}/instances" }
+    },
+    {
+      "name": "Cordeau: dry run (sin gastar annealer)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/cordeau/{{instance}}/solve",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"dryRun\": true,\n  \"maxCustomersPerSubproblem\": 8\n}" }
+      }
+    },
+    {
+      "name": "Cordeau: resolver con Amplify AE",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/cordeau/{{instance}}/solve",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"client\": \"ae\",\n  \"timeLimitMs\": 1000,\n  \"maxCustomersPerSubproblem\": 8\n}" }
+      }
+    },
+    {
+      "name": "Cordeau: resolver con Toshiba SQBM+",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/cordeau/{{instance}}/solve",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"client\": \"sqbm\",\n  \"timeLimitMs\": 2000,\n  \"maxCustomersPerSubproblem\": 8\n}" }
+      }
+    },
+    {
+      "name": "Cordeau: resolver con Hitachi Annealing Cloud Web",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/cordeau/{{instance}}/solve",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"client\": \"hitachi\",\n  \"maxCustomersPerSubproblem\": 6\n}" }
+      }
+    },
+    {
+      "name": "Instancia propia (CVRP de 1 deposito)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/solve",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"mini\",\n  \"instance\": {\n    \"vehicles_per_depot\": 2,\n    \"depots\": [ { \"x\": 0, \"y\": 0, \"vehicle_capacity\": 10 } ],\n    \"customers\": [\n      { \"id\": 1, \"x\": 1, \"y\": 1, \"demand\": 4 },\n      { \"id\": 2, \"x\": 2, \"y\": 0, \"demand\": 5 },\n      { \"id\": 3, \"x\": -1, \"y\": 2, \"demand\": 6 },\n      { \"id\": 4, \"x\": -2, \"y\": -1, \"demand\": 3 }\n    ]\n  },\n  \"options\": { \"client\": \"ae\", \"timeLimitMs\": 1000 }\n}"
+        }
+      }
+    }
+  ]
+}

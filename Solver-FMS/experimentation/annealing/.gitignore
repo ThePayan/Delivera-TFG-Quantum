@@ -1,0 +1,3 @@
+.venv/
+# Los tokens de los annealers. Nunca al repositorio: copia .env.example a .env.
+.env

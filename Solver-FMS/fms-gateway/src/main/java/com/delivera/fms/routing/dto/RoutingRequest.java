@@ -49,7 +49,8 @@ public record RoutingRequest(
                 "finalAcceptanceRate, coolingRate, movesPerTemperatureFactor, interDepotMoveProbability, " +
                 "depotCandidateRatio, localSearchFrequency, rebalanceFrequency and seed), " +
                 "QISKIT four (maxQubits, quantumTimeoutSeconds, classicalTimeLimit and includeMtz) " +
-                "and DWAVE one (classicalTimeLimit). " +
+                "DWAVE one (classicalTimeLimit) " +
+                "and AMPLIFY and SQBM two each (timeLimitMs and maxCustomersPerSubproblem). " +
                 "'seed' fixes the random generator and makes the run reproducible; if not sent, " +
                 "the engine draws one and returns it in the response's 'seed' field. " +
                 "An undeclared parameter is ignored with a warning; one out of range rejects the request",

@@ -384,6 +384,74 @@ fms:
           default-value: 60
           min: 1
           max: 300
+    # Experimental: not a container of the compose. It is the annealer experiment of
+    # experimentation/annealing, started by hand on the host with its own token
+    # (docs/annealer-experiment.md), so the default URL points at the host machine.
+    amplify:
+      url: http://host.docker.internal:8096
+      display-name: QUBO on Amplify AE
+      description: >-
+        Splits the instance classically (each customer to its nearest depot, then angular sweep
+        groups) and solves every group as a single-depot CVRP written as a QUBO on Fixstars
+        Amplify AE, a GPU annealer. A group the annealer cannot solve falls back to a sweep
+        heuristic. Maximum route duration is not modelled
+      strategy: QUBO annealing (decomposition + annealer)
+      technology: Python 3.11 / FastAPI + Fixstars Amplify SDK 1.7
+      version: 0.1.0
+      deterministic: false
+      order: 60
+      parameters:
+        - name: timeLimitMs
+          description: >-
+            Time of each annealer call, in milliseconds. There is one call per group, plus a
+            retry with one more vehicle when a group comes back infeasible. The free plan
+            allows up to 10 s per call
+          type: INTEGER
+          default-value: 3000
+          min: 100
+          max: 10000
+        - name: maxCustomersPerSubproblem
+          description: >-
+            Customers per QUBO group. Larger groups let the annealer optimise more routes
+            together and lower the gap (p01: 23.6 % with 8, 5.6 % with 20), at the cost of more
+            binary variables per call
+          type: INTEGER
+          default-value: 20
+          min: 1
+          max: 30
+    # Same engine and decomposition as AMPLIFY; only the annealer changes.
+    sqbm:
+      url: http://host.docker.internal:8096
+      display-name: QUBO on Toshiba SQBM+
+      description: >-
+        Same classical decomposition and QUBO as AMPLIFY (nearest depot, angular sweep groups,
+        one single-depot CVRP per group), solved on Toshiba SQBM+ (simulated bifurcation)
+        through Fixstars Amplify, with constraints sent natively (Qplib mode). In the 18/11/2026
+        tests it only found feasible solutions for groups of about 9 customers or fewer; any
+        group it cannot solve falls back to a sweep heuristic, which the engine logs
+      strategy: QUBO annealing (decomposition + simulated bifurcation)
+      technology: Python 3.11 / FastAPI + Fixstars Amplify SDK 1.7 + Toshiba SQBM+ 2
+      version: 0.1.0
+      deterministic: false
+      order: 70
+      parameters:
+        - name: timeLimitMs
+          description: >-
+            Time of each SQBM+ call, in milliseconds. One call per group, plus up to two
+            retries with one more vehicle when a group comes back infeasible. The free plan
+            allows up to 10 s per call
+          type: INTEGER
+          default-value: 3000
+          min: 100
+          max: 10000
+        - name: maxCustomersPerSubproblem
+          description: >-
+            Customers per QUBO group. SQBM+ only found feasible routes for small groups, so the
+            default is lower than in AMPLIFY
+          type: INTEGER
+          default-value: 8
+          min: 1
+          max: 30
 
 springdoc:
   api-docs:
