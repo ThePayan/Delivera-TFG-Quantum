@@ -15,7 +15,14 @@ services:
       - FMS_ENGINES_ANNEALING_URL=http://annealing-engine:8094
       - FMS_ENGINES_QISKIT_URL=http://quantum-engine:8095
       - FMS_ENGINES_DWAVE_URL=http://quantum-engine:8095
+      # El experimento de annealers corre fuera de Docker, en el anfitrion
+      # (docs/annealer-experiment.md). Sin el, el gateway muestra AMPLIFY como DOWN.
+      - FMS_ENGINES_AMPLIFY_URL=http://host.docker.internal:8096
+      - FMS_ENGINES_SQBM_URL=http://host.docker.internal:8096
       - FMS_INSTANCES_DIR=/app/instances-MD-CVRP-JSON
+    # host.docker.internal ya existe en Docker Desktop; esta linea lo define tambien en Linux.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./instances-MD-CVRP-JSON:/app/instances-MD-CVRP-JSON:ro
     depends_on:

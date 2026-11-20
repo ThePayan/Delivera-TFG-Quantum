@@ -1,0 +1,5 @@
+amplify==1.7.3
+numpy
+fastapi
+uvicorn
+python-dotenv
